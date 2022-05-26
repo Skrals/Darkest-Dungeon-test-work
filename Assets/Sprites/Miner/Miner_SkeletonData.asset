@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: Miner_SkeletonData
   m_EditorClassIdentifier: 
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 6d76a1be6c03a764e85e0412b6adeae6, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 452f866775f57ce4fadf27949e394ef1, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 20ce7d36183ca2c47b63c9ef87c9eee8, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []
