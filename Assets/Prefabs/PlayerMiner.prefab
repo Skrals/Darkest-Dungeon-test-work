@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1521510442401610786}
   - component: {fileID: 6216950078089086001}
   - component: {fileID: 4636656210028009028}
-  - component: {fileID: 2748420822633772308}
   - component: {fileID: 3400257991629267252}
+  - component: {fileID: 524417318305742538}
   m_Layer: 0
   m_Name: PlayerMiner
   m_TagString: Untagged
@@ -168,20 +168,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2748420822633772308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 862632875606488739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf18b3e02acec94ba0d0b46676ced2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _currenthealth: 0
 --- !u!114 &3400257991629267252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,3 +181,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+--- !u!114 &524417318305742538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862632875606488739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6272acc86ac319b488062df6edd6ca6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _currenthealth: 0

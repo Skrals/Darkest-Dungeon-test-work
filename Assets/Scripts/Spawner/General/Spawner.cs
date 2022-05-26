@@ -17,14 +17,26 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        foreach (var spawnPoint in _spawnPoints)
+        int random;
+
+        for (int i = 0; i < _spawnPoints.Length; i++)
         {
-            UnitSpawn(_playersCollection[0], spawnPoint);
+            random = Random.Range(0, 2);
+            Debug.Log(random);
+            if (i >= _spawnPoints.Length / 2)
+            {
+                UnitSpawn(_playersCollection[random], _spawnPoints[i]);
+            }
+            else
+            {
+                UnitSpawn(_enemysCollection[random], _spawnPoints[i]);
+            }
         }
 
         Destroy(_spawnPointsPrefab);
         Debug.Log(_unitsCollection.Count);
     }
+
 
     private void UnitSpawn(Unit unitTemplate, SpawnPoint spawnPoint)
     {
@@ -32,5 +44,6 @@ public class Spawner : MonoBehaviour
         unit.transform.parent = null;
         _unitsCollection.Add(unit.gameObject);
     }
+
 
 }

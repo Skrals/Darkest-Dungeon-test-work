@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6545083350736633058}
   - component: {fileID: 6545083350736633057}
   - component: {fileID: 6545083350736633056}
-  - component: {fileID: 2063476452551675710}
   - component: {fileID: 3410212295430609795}
+  - component: {fileID: 4931841866920637723}
   m_Layer: 0
   m_Name: PlayerEliteMiner
   m_TagString: Untagged
@@ -180,20 +180,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2063476452551675710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6545083350736632991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf18b3e02acec94ba0d0b46676ced2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 150
-  _currenthealth: 0
 --- !u!114 &3410212295430609795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +193,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+--- !u!114 &4931841866920637723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6545083350736632991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6272acc86ac319b488062df6edd6ca6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 150
+  _currenthealth: 0
