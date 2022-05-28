@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnitsCollection;
 
 public class Spawner : MonoBehaviour
 {
@@ -8,6 +7,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Player[] _playersArray;
 
     [SerializeField] private SpawnPoint[] _spawnPoints;
+
+    [SerializeField] private UnitsCollection _units;
 
     private void Start()
     {
@@ -43,23 +44,24 @@ public class Spawner : MonoBehaviour
         var unit = Instantiate(unitTemplate.transform, spawnPoint.transform);
         unit.transform.parent = null;
 
-        UnitAddInCollections(unitTemplate);
+
+        UnitAddInCollections(unit.gameObject.GetComponent<Unit>());
     }
 
-    private void UnitAddInCollections (Unit unit)
+    private void UnitAddInCollections(Unit unit)
     {
-        _unitsCollection.Add(unit);
+        _units._unitsCollection.Add(unit);
 
-        if(unit.GetType() == typeof(Enemy))
+        if (unit.GetType() == typeof(Enemy))
         {
-            _enemyCollection.Add((Enemy)unit);
+            _units._enemyCollection.Add((Enemy)unit);
         }
         else if (unit.GetType() == typeof(Player))
         {
-            _playerCollection.Add((Player)unit);
+            _units._playerCollection.Add((Player)unit);
         }
 
-        Debug.Log($"{_unitsCollection.Count} , {_playerCollection.Count} , {_enemyCollection.Count}");
+        //Debug.Log($"{_units._unitsCollection.Count} , {_units._playerCollection.Count} , {_units._enemyCollection.Count}");
     }
 
 }

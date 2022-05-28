@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+  _randomDamage: {x: 25, y: 60}
+  _damage: 0
 --- !u!114 &2143046437774575696
 MonoBehaviour:
   m_ObjectHideFlags: 0

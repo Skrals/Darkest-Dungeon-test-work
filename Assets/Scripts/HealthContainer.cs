@@ -19,4 +19,9 @@ public class HealthContainer : MonoBehaviour
         OnHealthChange?.Invoke(_currenthealth);
     }
     
+    
+    public float CurrentHealth()
+    {
+        return _currenthealth; 
+    }
 }
