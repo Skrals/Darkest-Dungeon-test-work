@@ -329,9 +329,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48e5a41feda36343b5f3c63de1373d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 459698700}
   _attacker: {fileID: 0}
   _target: {fileID: 0}
   _currentUnitNumber: 0
+  _units: {fileID: 446236305}
 --- !u!4 &124354665
 Transform:
   m_ObjectHideFlags: 0
@@ -833,6 +835,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2678108c4bdbd489e131f412240b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &446236304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 446236306}
+  - component: {fileID: 446236305}
+  m_Layer: 0
+  m_Name: UnitsCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &446236305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446236304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8138be99a52224188719d5fe6175cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitsCollection: []
+  _playerCollection: []
+  _enemyCollection: []
+--- !u!4 &446236306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446236304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 302.4385, y: 93.58084, z: -37.701065}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &459698699
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,6 +918,7 @@ MonoBehaviour:
   - {fileID: 3410212295430609795, guid: d21c8aed7448a1942a2c355e6a2b8397, type: 3}
   - {fileID: 3400257991629267252, guid: ed899411149459d4bbeea4d493534c3c, type: 3}
   _spawnPoints: []
+  _units: {fileID: 446236305}
 --- !u!4 &459698701
 Transform:
   m_ObjectHideFlags: 0

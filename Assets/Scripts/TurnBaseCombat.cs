@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Debug;
@@ -12,10 +13,24 @@ public class TurnBaseCombat : MonoBehaviour
 
     [SerializeField] private UnitsCollection _units;
 
+    private List<Unit> _mainList;
+    private List<Player> _playerList;
+    private List<Enemy> _enemyList;
+
+    [SerializeField] private int _deadEnemy;
+    [SerializeField] private int _deadPlayer;
+
+    private void Start()
+    {
+        _mainList = _units._unitsCollection;
+        _playerList = _units._playerCollection;
+        _enemyList = _units._enemyCollection;
+    }
+
     public void BattleStart()
     {
-        UnitsShuffle(_units._unitsCollection);
-        _attacker = _units._unitsCollection[_currentUnitNumber];
+        UnitsShuffle(_mainList);
+        _attacker = _mainList[_currentUnitNumber];
         StartCoroutine(BattleLoop());
     }
 
@@ -23,7 +38,6 @@ public class TurnBaseCombat : MonoBehaviour
     {
         NextUnit();
     }
-
 
     private void UnitsShuffle(List<Unit> units)
     {
@@ -41,69 +55,114 @@ public class TurnBaseCombat : MonoBehaviour
     {
         if (attacker != null && target != null)
         {
+            Log($"{attacker} {_currentUnitNumber} attaked {target}");
             var health = target.gameObject.GetComponent<HealthContainer>();
             health.TakeDamage(attacker.Attack());
         }
     }
 
+    private bool CompairUnits(Unit attacker, Unit target)
+    {
+        if (attacker.GetType() != target.GetType())
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void NextUnit()
     {
         _currentUnitNumber++;
-        _attacker = _units._unitsCollection[_currentUnitNumber];
+
+        if (_currentUnitNumber <= _mainList.Count - 1)
+        {
+            _attacker = _mainList[_currentUnitNumber];
+        }
+        else
+        {
+            _currentUnitNumber = 0;
+            UnitsShuffle(_mainList);
+            Log("Shuffle");
+        }
     }
 
+    private bool DeadUnits()
+    {
+        _deadEnemy = 0;
+        _deadPlayer = 0;
+
+        foreach (var unit in _enemyList)
+        {
+            if (unit == null)
+                _deadEnemy++;
+        }
+
+        foreach (var unit in _playerList)
+        {
+            if (unit == null)
+                _deadPlayer++;
+        }
+
+        if (_deadPlayer >= _playerList.Count || _deadEnemy >= _enemyList.Count)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     private IEnumerator BattleLoop()
     {
         System.Random targetIndex = new System.Random();
+        var unitType = _mainList[_currentUnitNumber].GetType();
 
         while (true)
         {
-            if (_units._playerCollection.Count <= 0 || _units._enemyCollection.Count <= 0)
+            if (DeadUnits())
             {
-                StopCoroutine(BattleLoop());
-            }
-            else if (_currentUnitNumber >= _units._unitsCollection.Count-1)
-            {
-                _currentUnitNumber = 0;
-                UnitsShuffle(_units._unitsCollection);
-                Log("Shuffle");
-                yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+                break;
             }
 
-            if(_units._unitsCollection[_currentUnitNumber].GetType() == typeof(Player))
+            if (_mainList[_currentUnitNumber] == null)
             {
-                _target = _units._enemyCollection[targetIndex.Next(_units._enemyCollection.Count)];
-                Attack(_attacker, _target);
                 NextUnit();
-                Log($"{_attacker} {_currentUnitNumber} attaked {_target}");
-              //  yield return new WaitForSeconds(5);
             }
-            else if (_units._unitsCollection[_currentUnitNumber].GetType() == typeof(Enemy))
+
+            if (unitType == typeof(Player))
             {
-                _target = _units._playerCollection[targetIndex.Next(_units._playerCollection.Count)];
-                Attack(_attacker, _target);
-                NextUnit();
-                Log($"{_attacker} {_currentUnitNumber} attaked {_target}");
-                //yield return new WaitForSeconds(5);
+                _target = _mainList[targetIndex.Next(_mainList.Count)];
+
+                if (_target != null && CompairUnits(_attacker, _target))
+                {
+                    Attack(_attacker, _target);
+                }
+                else
+                {
+                    continue;
+                }
+
+                yield return new WaitForSeconds(2);
+
             }
+            else if (unitType == typeof(Enemy))
+            {
+                _target = _mainList[targetIndex.Next(_mainList.Count)];
+
+                if (_target != null && CompairUnits(_attacker, _target))
+                {
+                    Attack(_attacker, _target);
+                }
+                else
+                {
+                    continue;
+                }
+
+                yield return new WaitForSeconds(2);
+
+            }
+
+            NextUnit();
         }
     }
 
-
-    private void DebugInspectUnits()
-    {
-        foreach (var item in _units._unitsCollection)
-        {
-            Log($"{item.name}");
-            Log($"{item.gameObject.GetComponent<HealthContainer>().CurrentHealth()}");
-        }
-    }
-
-    private void DebugInspectSplitCollections()
-    {
-        Log($"Enemys {_units._enemyCollection.Count}");
-        Log("");
-        Log($"Players {_units._playerCollection.Count}");
-    }
 }

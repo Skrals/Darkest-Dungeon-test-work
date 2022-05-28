@@ -12,11 +12,9 @@ public class Player : Unit
     {
         Log($"{gameObject.name} current health {health}");
         if (health <= 0)
-        { 
-            Destroy(gameObject);
+        {
             Log($"{gameObject.name} was killes");
-            _units._unitsCollection.Remove(this);
-            _units._playerCollection.Remove(this);
+            Destroy(gameObject);
         }
     }
 }
