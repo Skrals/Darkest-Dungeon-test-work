@@ -111,7 +111,7 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
-    private IEnumerator BattleLoop()
+    private IEnumerator BattleLoop() //TODO подвязать анимации и эффект передвижения через отдельный скрипт
     {
         System.Random targetIndex = new System.Random();
         var unitType = _mainList[_currentUnitNumber].GetType();
@@ -129,8 +129,8 @@ public class TurnBaseCombat : MonoBehaviour
             }
 
             if (unitType == typeof(Player))
-            {
-                _target = _mainList[targetIndex.Next(_mainList.Count)];
+            {                                                           //TODO ожидание действия игрока и скип хода по кнопке
+                _target = _mainList[targetIndex.Next(_mainList.Count)];// TODO выбор цели - сюда должна приходить цель по клику
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
