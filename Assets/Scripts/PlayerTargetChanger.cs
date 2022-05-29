@@ -6,7 +6,7 @@ public class PlayerTargetChanger : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private TurnBaseCombat _turnBaseCombat;
 
-    private bool _attackButtonClick;
+    [SerializeField]private bool _attackButtonClick;
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public class PlayerTargetChanger : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && _turnBaseCombat.PlayerTurn && _attackButtonClick)
+        if(Input.GetMouseButtonDown(0) && _attackButtonClick && _turnBaseCombat.PlayerTurn)
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

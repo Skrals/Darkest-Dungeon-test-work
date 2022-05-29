@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Debug;
@@ -40,11 +39,19 @@ public class TurnBaseCombat : MonoBehaviour
     public void GetTarget(Unit target)
     {
         _target = target;
+        PlayerTurn = false;
     }
 
     public void Skipping()
     {
+        if(!PlayerTurn)
+        {
+            return;
+        }
+        PlayerTurn = false;
+        StopAllCoroutines();
         NextUnit();
+        StartCoroutine(BattleLoop());
     }
 
     private void UnitsShuffle(List<Unit> units)
@@ -119,58 +126,67 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
-    private IEnumerator BattleLoop() //TODO подвязать анимации и эффект передвижения через отдельный скрипт
+    private IEnumerator WaitInput()
+    {
+        yield return new WaitWhile(() => _target == null);
+    }
+
+    private IEnumerator BattleLoop()
     {
         System.Random targetIndex = new System.Random();
-        var unitType = _mainList[_currentUnitNumber].GetType();
 
         while (true)
         {
+            _target = null;
+
             if (DeadUnits())
             {
-                break;
+                yield break;
             }
 
-            if (_mainList[_currentUnitNumber] == null)
+            if (_attacker == null)
             {
                 NextUnit();
+                continue;
             }
 
-            if (unitType == typeof(Player))
+            if (_mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
+                yield return new WaitForSeconds(2);
                 PlayerTurn = true;
-                 //TODO ожидание действия игрока и скип хода по кнопке
-                _target = _mainList[targetIndex.Next(_mainList.Count)];// TODO выбор цели - сюда должна приходить цель по клику
+                yield return StartCoroutine(WaitInput());
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
                     Attack(_attacker, _target);
                     PlayerTurn = false;
+                    yield return new WaitForSeconds(2);
                 }
-                else
-                {
-                    continue;
-                }
-
             }
-            else if (unitType == typeof(Enemy) && PlayerTurn == false)
+            else
             {
                 _target = _mainList[targetIndex.Next(_mainList.Count)];
+
+                if (_target == null)
+                {
+                    foreach (Unit player in _mainList)
+                    {
+                        if (player != null && player.gameObject.GetComponent<Player>())
+                        {
+                            _target = player;
+                        }
+                    }
+                }
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
                     Attack(_attacker, _target);
+                    yield return new WaitForSeconds(2);
                 }
-                else
-                {
-                    continue;
-                }
-
-                yield return new WaitForSeconds(2);
-
             }
 
             NextUnit();
+            yield return new WaitForEndOfFrame();
         }
     }
 
