@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6118088567718100506}
   - component: {fileID: 2255095504769615444}
   - component: {fileID: 2143046437774575696}
+  - component: {fileID: 8052641813382678662}
   m_Layer: 0
   m_Name: EnemyEliteMiner
   m_TagString: Untagged
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+  _units: {fileID: 0}
   _randomDamage: {x: 25, y: 60}
   _damage: 0
 --- !u!114 &2143046437774575696
@@ -160,3 +162,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 150
   _currenthealth: 0
+--- !u!65 &8052641813382678662
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7022009118712308028}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7288256, y: 9.639956, z: 0}
+  m_Center: {x: -0.040104866, y: 4.7851167, z: -0}

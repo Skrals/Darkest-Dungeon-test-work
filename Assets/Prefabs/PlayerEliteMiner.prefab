@@ -144,9 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+  _units: {fileID: 0}
   _randomDamage: {x: 30, y: 70}
-  _minDamage: 30
-  _maxDamage: 70
   _damage: 0
 --- !u!114 &4931841866920637723
 MonoBehaviour:

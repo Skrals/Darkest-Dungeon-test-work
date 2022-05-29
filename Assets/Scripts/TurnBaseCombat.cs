@@ -20,8 +20,11 @@ public class TurnBaseCombat : MonoBehaviour
     [SerializeField] private int _deadEnemy;
     [SerializeField] private int _deadPlayer;
 
+    public bool PlayerTurn { get; private set; }
+
     private void Start()
     {
+        PlayerTurn = false;
         _mainList = _units._unitsCollection;
         _playerList = _units._playerCollection;
         _enemyList = _units._enemyCollection;
@@ -129,22 +132,23 @@ public class TurnBaseCombat : MonoBehaviour
             }
 
             if (unitType == typeof(Player))
-            {                                                           //TODO ожидание действия игрока и скип хода по кнопке
+            {
+                PlayerTurn = true;
+                 //TODO ожидание действия игрока и скип хода по кнопке
                 _target = _mainList[targetIndex.Next(_mainList.Count)];// TODO выбор цели - сюда должна приходить цель по клику
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
                     Attack(_attacker, _target);
+                    PlayerTurn = false;
                 }
                 else
                 {
                     continue;
                 }
 
-                yield return new WaitForSeconds(2);
-
             }
-            else if (unitType == typeof(Enemy))
+            else if (unitType == typeof(Enemy) && PlayerTurn == false)
             {
                 _target = _mainList[targetIndex.Next(_mainList.Count)];
 

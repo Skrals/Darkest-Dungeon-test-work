@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3077703942289992151}
   - component: {fileID: 7003248847337643859}
   - component: {fileID: 5596217491122342901}
+  - component: {fileID: 1897235142968619758}
   m_Layer: 0
   m_Name: EnemyMiner
   m_TagString: Untagged
@@ -132,9 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthContainer: {fileID: 0}
+  _units: {fileID: 0}
   _randomDamage: {x: 10, y: 30}
-  _minDamage: 10
-  _maxDamage: 30
   _damage: 0
 --- !u!114 &5596217491122342901
 MonoBehaviour:
@@ -150,3 +150,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currenthealth: 0
+--- !u!65 &1897235142968619758
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267080888679308284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.7288256, y: 9.639956, z: 0}
+  m_Center: {x: -0.040104866, y: 4.7851167, z: -0}
