@@ -37,6 +37,11 @@ public class TurnBaseCombat : MonoBehaviour
         StartCoroutine(BattleLoop());
     }
 
+    public void GetTarget(Unit target)
+    {
+        _target = target;
+    }
+
     public void Skipping()
     {
         NextUnit();

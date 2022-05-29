@@ -6,6 +6,8 @@ public class PlayerTargetChanger : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private TurnBaseCombat _turnBaseCombat;
 
+    private bool _attackButtonClick;
+
     private void Start()
     {
         _turnBaseCombat = gameObject.GetComponent<TurnBaseCombat>();
@@ -13,7 +15,7 @@ public class PlayerTargetChanger : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && _turnBaseCombat.PlayerTurn)
+        if(Input.GetMouseButtonDown(0) && _turnBaseCombat.PlayerTurn && _attackButtonClick)
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -21,7 +23,14 @@ public class PlayerTargetChanger : MonoBehaviour
             if(Physics.Raycast(ray, out hit))
             {
                 _enemyTarget = hit.collider.gameObject.GetComponent<Enemy>();
+                _turnBaseCombat.GetTarget(_enemyTarget);
+                _attackButtonClick = false;
             }
         }
+    }
+
+    public void AttackButton()
+    { 
+        _attackButtonClick = true;
     }
 }
