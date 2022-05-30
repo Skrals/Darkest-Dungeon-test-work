@@ -179,4 +179,6 @@ MonoBehaviour:
   _attak: {fileID: 11400000, guid: 10a5324da6bdd0d479a043898622b4e8, type: 2}
   _doubleAttack: {fileID: 11400000, guid: 14ba6055268fb2848ad55b56708087b0, type: 2}
   _damageg: {fileID: 11400000, guid: ace1521cb95856542ac9073b5bb04a7e, type: 2}
-  _currentState: 
+  _animationState: 0
+  _currenDuration: 0
+  _delayMultiply: 200

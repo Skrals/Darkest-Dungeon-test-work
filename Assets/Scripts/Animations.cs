@@ -8,25 +8,35 @@ public class Animations : MonoBehaviour
 {
     [SerializeField] private SkeletonAnimation _skeletonAnimation;
     [SerializeField] private AnimationReferenceAsset _idle, _attak, _doubleAttack, _damageg;
-    [SerializeField] private AnimationState _animationState = 0;
 
     // Start is called before the first frame update
     private void Start()
     {
         _skeletonAnimation = GetComponent<SkeletonAnimation>();
-        _animationState = AnimationState.Idle;
-        SetCharacterState(_animationState);
+        SetCharacterState(AnimationState.Idle);
 
     }
 
     private void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
     {
-        if (animation.name.Equals(_animationState))
-        {
-            return;
-        }
         _skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
     }
+
+    public async void AttacksAnimations(Unit attacker, Unit target)
+    {
+        var attackerAnimation = attacker.GetComponent<Animations>();
+        var targetAnimation = target.GetComponent<Animations>();
+
+        attackerAnimation.SetCharacterState(AnimationState.Attack);
+        await Task.Delay(1200);
+
+        targetAnimation.SetCharacterState(AnimationState.Damaged);
+        attackerAnimation.SetCharacterState(AnimationState.Idle);
+
+        await Task.Delay(1500);
+        targetAnimation.SetCharacterState(AnimationState.Idle);
+    }
+
 
     public async void SetCharacterState(AnimationState state)
     {

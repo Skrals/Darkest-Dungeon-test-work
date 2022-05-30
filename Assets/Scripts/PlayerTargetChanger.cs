@@ -15,7 +15,13 @@ public class PlayerTargetChanger : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && _attackButtonClick && _turnBaseCombat.PlayerTurn)
+        if(!_turnBaseCombat.PlayerTurn)
+        {
+            _attackButtonClick = false;
+            return;
+        }
+
+        if(Input.GetMouseButtonDown(0) && _attackButtonClick)
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -27,6 +33,7 @@ public class PlayerTargetChanger : MonoBehaviour
                 _attackButtonClick = false;
             }
         }
+
     }
 
     public void AttackButton()

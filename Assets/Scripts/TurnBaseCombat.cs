@@ -10,6 +10,7 @@ public class TurnBaseCombat : MonoBehaviour
     [SerializeField] private Unit _attacker;
     [SerializeField] private Unit _target;
     [SerializeField] private MoveUnits _moveUnits;
+    [SerializeField] private Animations _animations;
 
     [SerializeField] private int _currentUnitNumber;
 
@@ -27,6 +28,7 @@ public class TurnBaseCombat : MonoBehaviour
     private void Start()
     {
         PlayerTurn = false;
+        _animations = new Animations();
         _mainList = _units._unitsCollection;
         _playerList = _units._playerCollection;
         _enemyList = _units._enemyCollection;
@@ -71,8 +73,6 @@ public class TurnBaseCombat : MonoBehaviour
 
     private void Attack(Unit attacker, Unit target)
     {
-        var attackerAnimation = attacker.GetComponent<Animations>();
-        var targetAnimation = target.GetComponent<Animations>();
 
         if (attacker != null && target != null)
         {
@@ -82,10 +82,7 @@ public class TurnBaseCombat : MonoBehaviour
 
             _moveUnits.UnitsChangePositions(attacker, target);
 
-            attackerAnimation.SetCharacterState(AnimationState.Attack);
-            //float delay = attackerAnimation._attak.Animation.Duration;
-
-            targetAnimation.SetCharacterState(AnimationState.Damaged);
+            _animations.AttacksAnimations(attacker, target);
         }
     }
 
@@ -140,11 +137,6 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
-    //private IEnumerator WaitAnimation(float delay)
-    //{
-
-    //}
-
     private IEnumerator WaitInput()
     {
         yield return new WaitWhile(() => _target == null);
@@ -169,7 +161,7 @@ public class TurnBaseCombat : MonoBehaviour
                 continue;
             }
 
-            if (_mainList[_currentUnitNumber].gameObject.GetComponent<Player>() && _mainList[_currentUnitNumber].gameObject != null)
+            if (_mainList[_currentUnitNumber].gameObject != null && _mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
                 yield return new WaitForSeconds(2);
 
@@ -188,13 +180,16 @@ public class TurnBaseCombat : MonoBehaviour
             {
                 _target = _mainList[targetIndex.Next(_mainList.Count)];
 
-                if (_target == null)
+                if (_target == null || _target != gameObject.GetComponent<Player>())//если не нашли игрока делаем дополнительные итерации
                 {
-                    foreach (Unit player in _mainList)
+                    for (int i = 0; i < _mainList.Count; i++)
                     {
-                        if (player != null && player.gameObject.GetComponent<Player>())
+                        var target = _mainList[targetIndex.Next(_mainList.Count)];
+
+                        if (target != null && target.gameObject.GetComponent<Player>())
                         {
-                            _target = player;
+                            _target = target;
+                            break;
                         }
                     }
                 }
