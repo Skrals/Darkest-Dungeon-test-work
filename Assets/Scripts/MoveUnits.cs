@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class MoveUnits : MonoBehaviour
 {
@@ -25,10 +26,33 @@ public class MoveUnits : MonoBehaviour
         return 0;
     }
 
-    private void MoveUnitsPlayer(int start, int end, SpawnPoint[] points)//Todo - сделать плавное перемещение - добавить перемещение противников
+    private async void MoveUnitsEnemy(int start, int end, SpawnPoint[] points)
     {
         Vector3 tmp = Vector3.zero;
         SpawnPoint point;
+
+        for (int i = start; i < end; i++)
+        {
+            var prev = points[i].transform.position;
+            tmp = points[i + 1].transform.position;
+
+            var currentPoint = points[i];
+            point = points[i + 1];
+
+            points[i + 1].transform.position = prev;
+            points[i].transform.position = tmp;
+
+            points[i + 1] = currentPoint;
+            points[i] = point;
+            await Task.Delay(100);
+        }
+    }
+
+    private async void MoveUnitsPlayer(int start, int end, SpawnPoint[] points)
+    {
+        Vector3 tmp = Vector3.zero;
+        SpawnPoint point;
+
         for (int i = start; i > end; i--)
         {
             var next = points[i].transform.position;
@@ -42,6 +66,7 @@ public class MoveUnits : MonoBehaviour
 
             points[i - 1] = currentPoint;
             points[i] = point;
+            await Task.Delay(100);
         }
     }
 
@@ -56,6 +81,7 @@ public class MoveUnits : MonoBehaviour
             EnemyIndex = SearchIndex(target);
 
             MoveUnitsPlayer(PlayerIndex, 4, _spawner.GetSpawnPoints());
+            MoveUnitsEnemy(EnemyIndex,3, _spawner.GetSpawnPoints());
 
         }
         else
@@ -63,6 +89,7 @@ public class MoveUnits : MonoBehaviour
             PlayerIndex = SearchIndex(target);
             EnemyIndex = SearchIndex(attacker);
 
+            MoveUnitsEnemy(EnemyIndex, 3, _spawner.GetSpawnPoints());
             MoveUnitsPlayer(PlayerIndex, 4, _spawner.GetSpawnPoints());
         }
     }
