@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3077703942289992151}
   - component: {fileID: 7003248847337643859}
   - component: {fileID: 5596217491122342901}
+  - component: {fileID: -126962100133314224}
   - component: {fileID: 1897235142968619758}
   m_Layer: 0
   m_Name: EnemyMiner
@@ -117,8 +118,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Idle
-  loop: 1
+  _animationName: 
+  loop: 0
   timeScale: 0.5
 --- !u!114 &7003248847337643859
 MonoBehaviour:
@@ -150,6 +151,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currenthealth: 0
+--- !u!114 &-126962100133314224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267080888679308284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57ad6b5dae5b514181d066ebd0826fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonAnimation: {fileID: 0}
+  _idle: {fileID: 11400000, guid: 68d3ba0ae62cb13479ae2c590f809132, type: 2}
+  _currentState: 
 --- !u!65 &1897235142968619758
 BoxCollider:
   m_ObjectHideFlags: 0

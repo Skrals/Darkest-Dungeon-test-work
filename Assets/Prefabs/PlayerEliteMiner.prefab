@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6545083350736633058}
   - component: {fileID: 3410212295430609795}
   - component: {fileID: 4931841866920637723}
+  - component: {fileID: 1438433717022886518}
   m_Layer: 0
   m_Name: PlayerEliteMiner
   m_TagString: Untagged
@@ -128,8 +129,8 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: Idle
-  loop: 1
+  _animationName: 
+  loop: 0
   timeScale: 0.5
 --- !u!114 &3410212295430609795
 MonoBehaviour:
@@ -161,3 +162,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 150
   _currenthealth: 0
+--- !u!114 &1438433717022886518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6545083350736632991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57ad6b5dae5b514181d066ebd0826fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skeletonAnimation: {fileID: 0}
+  _idle: {fileID: 11400000, guid: 68d3ba0ae62cb13479ae2c590f809132, type: 2}
+  _currentState: 
