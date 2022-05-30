@@ -44,7 +44,7 @@ public class TurnBaseCombat : MonoBehaviour
 
     public void Skipping()
     {
-        if(!PlayerTurn)
+        if (!PlayerTurn)
         {
             return;
         }
@@ -73,6 +73,7 @@ public class TurnBaseCombat : MonoBehaviour
             Log($"{attacker} {_currentUnitNumber} attaked {target}");
             var health = target.gameObject.GetComponent<HealthContainer>();
             health.TakeDamage(attacker.Attack());
+            UnitsChangePositions(attacker, target);
         }
     }
 
@@ -96,6 +97,7 @@ public class TurnBaseCombat : MonoBehaviour
         else
         {
             _currentUnitNumber = 0;
+
             UnitsShuffle(_mainList);
             Log("Shuffle");
         }
@@ -126,12 +128,71 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
+    private int SearchIndex(Unit unit)
+    {
+        var pointsArray = _spawner.GetSpawnPoints();
+        int index = 0;
+
+        foreach (var point in pointsArray)
+        {
+            if (unit.gameObject.GetComponentInParent<SpawnPoint>() == point)
+            {
+                Log(index);
+                return index;
+            }
+            index++;
+        }
+        return 0;
+    }
+
+    private void MoveUnitsPlayer(int start, int end, SpawnPoint[] points)//Todo - сделать плавное перемещение - добавить перемещение противников
+    {
+        Vector3 tmp = Vector3.zero;
+        SpawnPoint point;
+        for (int i = start; i > end; i--)
+        {
+            var next = points[i].transform.position;
+            tmp = points[i-1].transform.position;
+            
+            var currentPoint = points[i];
+            point = points[i - 1];
+
+            points[i - 1].transform.position = next;
+            points[i].transform.position = tmp;
+
+            points[i - 1] = currentPoint;
+            points[i] = point;
+        }
+    }
+
+    private void UnitsChangePositions(Unit attacker, Unit target) //c 0 по 3 противник с 4 по 7 игрок
+    {
+        var PlayerIndex = 0;
+        var EnemyIndex = 0;
+
+        if (attacker.gameObject.GetComponent<Player>())
+        {
+            PlayerIndex = SearchIndex(attacker);
+            EnemyIndex = SearchIndex(target);
+
+            MoveUnitsPlayer(PlayerIndex, 4, _spawner.GetSpawnPoints());
+
+        }
+        else
+        {
+            PlayerIndex = SearchIndex(target);
+            EnemyIndex = SearchIndex(attacker);
+
+            MoveUnitsPlayer(PlayerIndex, 4, _spawner.GetSpawnPoints());
+        }
+    }
+
     private IEnumerator WaitInput()
     {
         yield return new WaitWhile(() => _target == null);
     }
 
-    private IEnumerator BattleLoop()
+    private IEnumerator BattleLoop()//Todo анимации атаки и перемещение цели и атакера вперед
     {
         System.Random targetIndex = new System.Random();
 
@@ -153,7 +214,9 @@ public class TurnBaseCombat : MonoBehaviour
             if (_mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
                 yield return new WaitForSeconds(2);
+
                 PlayerTurn = true;
+
                 yield return StartCoroutine(WaitInput());
 
                 if (_target != null && CompairUnits(_attacker, _target))
@@ -186,6 +249,7 @@ public class TurnBaseCombat : MonoBehaviour
             }
 
             NextUnit();
+
             yield return new WaitForEndOfFrame();
         }
     }

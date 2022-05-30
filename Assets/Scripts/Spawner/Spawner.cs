@@ -42,7 +42,7 @@ public class Spawner : MonoBehaviour
     private void UnitSpawn(Unit unitTemplate, SpawnPoint spawnPoint)
     {
         var unit = Instantiate(unitTemplate.transform, spawnPoint.transform);
-        unit.transform.parent = null;
+        //unit.transform.parent = null;
 
 
         UnitAddInCollections(unit.gameObject.GetComponent<Unit>());
@@ -64,4 +64,8 @@ public class Spawner : MonoBehaviour
         //Debug.Log($"{_units._unitsCollection.Count} , {_units._playerCollection.Count} , {_units._enemyCollection.Count}");
     }
 
+    public SpawnPoint[] GetSpawnPoints()
+    {
+        return _spawnPoints;
+    }
 }
