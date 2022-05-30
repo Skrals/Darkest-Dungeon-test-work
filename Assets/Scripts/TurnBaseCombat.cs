@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 using static UnityEngine.Debug;
 
 public class TurnBaseCombat : MonoBehaviour
@@ -9,6 +10,7 @@ public class TurnBaseCombat : MonoBehaviour
     [SerializeField] private Unit _attacker;
     [SerializeField] private Unit _target;
     [SerializeField] private MoveUnits _moveUnits;
+
     [SerializeField] private int _currentUnitNumber;
 
     [SerializeField] private UnitsCollection _units;
@@ -69,13 +71,21 @@ public class TurnBaseCombat : MonoBehaviour
 
     private void Attack(Unit attacker, Unit target)
     {
+        var attackerAnimation = attacker.GetComponent<Animations>();
+        var targetAnimation = target.GetComponent<Animations>();
+
         if (attacker != null && target != null)
         {
             Log($"{attacker} {_currentUnitNumber} attaked {target}");
             var health = target.gameObject.GetComponent<HealthContainer>();
             health.TakeDamage(attacker.Attack());
 
-           _moveUnits.UnitsChangePositions(attacker, target);
+            _moveUnits.UnitsChangePositions(attacker, target);
+
+            attackerAnimation.SetCharacterState(AnimationState.Attack);
+            //float delay = attackerAnimation._attak.Animation.Duration;
+
+            targetAnimation.SetCharacterState(AnimationState.Damaged);
         }
     }
 
@@ -130,6 +140,11 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
+    //private IEnumerator WaitAnimation(float delay)
+    //{
+
+    //}
+
     private IEnumerator WaitInput()
     {
         yield return new WaitWhile(() => _target == null);
@@ -166,7 +181,7 @@ public class TurnBaseCombat : MonoBehaviour
                 {
                     Attack(_attacker, _target);
                     PlayerTurn = false;
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(5);
                 }
             }
             else
@@ -187,7 +202,7 @@ public class TurnBaseCombat : MonoBehaviour
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
                     Attack(_attacker, _target);
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(5);
                 }
             }
 
