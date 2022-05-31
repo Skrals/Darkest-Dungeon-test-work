@@ -31,6 +31,8 @@ public class TurnBaseCombat : MonoBehaviour
 
     [Header("Unit view preset")]
     [SerializeField] private UnitTurn _turnView;
+    [SerializeField] private Color _turnColor = new Color(243, 209, 0, 255);
+    [SerializeField] private Color _turnColorOff = new Color(243, 209, 0, 0);
     public bool PlayerTurn { get; private set; }
 
     private void Start()
@@ -62,6 +64,7 @@ public class TurnBaseCombat : MonoBehaviour
             return;
         }
         PlayerTurn = false;
+        _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
         StopAllCoroutines();
         NextUnit();
         StartCoroutine(BattleLoop());
@@ -176,7 +179,7 @@ public class TurnBaseCombat : MonoBehaviour
             if (_mainList[_currentUnitNumber].gameObject != null && _mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
                 yield return new WaitForSeconds(2);
-                _turnView.GetComponent<Image>().color = new Color(243, 209, 0, 255);// показываем метку хода
+                _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
                 PlayerTurn = true;
 
                 yield return StartCoroutine(WaitInput());
@@ -188,7 +191,7 @@ public class TurnBaseCombat : MonoBehaviour
                     yield return new WaitForSeconds(5);
                 }
 
-                _turnView.GetComponent<Image>().color = new Color(243, 209, 0, 0);// скрываем метку хода
+                _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
             }
             else
             {
@@ -210,13 +213,13 @@ public class TurnBaseCombat : MonoBehaviour
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
-                    _turnView.GetComponent<Image>().color = new Color(243, 209, 0, 255);// показываем метку хода
+                    _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
 
                     Attack(_attacker, _target);
                     yield return new WaitForSeconds(5);
                 }
 
-                _turnView.GetComponent<Image>().color = new Color(243, 209, 0, 0);// скрываем метку хода
+                _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
             }
 
             NextUnit();
