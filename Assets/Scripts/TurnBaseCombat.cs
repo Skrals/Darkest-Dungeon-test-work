@@ -24,17 +24,13 @@ public class TurnBaseCombat : MonoBehaviour
     private List<Player> _playerList;
     private List<Enemy> _enemyList;
 
-    [Header("Dead units checker")]
-    [SerializeField] private int _deadEnemy;
-    [SerializeField] private int _deadPlayer;
-
     [Header("Unit view preset")]
     [SerializeField] private UnitTurn _turnView;
     [SerializeField] private Color _turnColor = new Color(243, 209, 0, 255);
     [SerializeField] private Color _turnColorOff = new Color(243, 209, 0, 0);
     public bool PlayerTurn { get; private set; }
 
-    [SerializeField]private bool _startBattle;
+    [SerializeField] private bool _startBattle;
 
     private void Start()
     {
@@ -47,7 +43,7 @@ public class TurnBaseCombat : MonoBehaviour
 
     public void BattleStart()
     {
-        if(_startBattle)
+        if (_startBattle)
         {
             return;
         }
@@ -135,60 +131,15 @@ public class TurnBaseCombat : MonoBehaviour
 
     private bool DeadUnits()
     {
-        _deadEnemy = 0;
-        _deadPlayer = 0;
-        foreach (var unit in _enemyList)
+        if (_playerList.Count <= 0 || _enemyList.Count <= 0)
         {
-            if (unit == null)
-                _deadEnemy++;
-        }
-
-        foreach (var unit in _playerList)
-        {
-            if (unit == null)
-                _deadPlayer++;
-        }
-
-        if (_deadPlayer >= _playerList.Count || _deadEnemy >= _enemyList.Count)
-        {
-            string result = _deadPlayer == _playerList.Count ? "You squad was defeated" : "You won this battle";
+            string result = _playerList.Count <= 0 ? "You squad was defeated" : "You won this battle";
             Log(result);
 
             return true;
         }
 
         return false;
-    }
-
-    private void RemoveNulable()
-    {
-        foreach (var unit in _mainList)
-        {
-            if (unit == null)
-            {
-                StopCoroutine(BattleLoop());
-                _mainList.Remove(unit);
-
-                try
-                {
-                    if (_currentUnitNumber > _mainList.Count - 1)
-                    {
-                        UnitsShuffle(_mainList);
-                        StartCoroutine(BattleLoop());
-                    }
-                    else
-                    {
-                        _attacker = _mainList[_currentUnitNumber];
-                        StartCoroutine(BattleLoop());
-                    }
-                }
-                catch (MissingReferenceException exeption)
-                { 
-                    Log(exeption.Message);
-                }
-            }
-        }
-
     }
 
     private IEnumerator WaitInput()
@@ -209,8 +160,6 @@ public class TurnBaseCombat : MonoBehaviour
             {
                 yield break;
             }
-
-            RemoveNulable();
 
             if (_currentUnitNumber > _mainList.Count - 1)
             {

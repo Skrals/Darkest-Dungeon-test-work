@@ -14,6 +14,8 @@ public class Enemy : Unit
         if (health <= 0)
         {
             Log($"{gameObject.name} was killed");
+            _units._unitsCollection.Remove(this);
+            _units._enemyCollection.Remove(this);
             await Task.Delay(3000);
             Destroy(gameObject);
         }

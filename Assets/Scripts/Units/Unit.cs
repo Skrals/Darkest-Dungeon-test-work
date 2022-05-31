@@ -9,7 +9,11 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private Vector2 _randomDamage;
     [SerializeField] private float _damage;
 
-    private void Awake() => _healthContainer = GetComponent<HealthContainer>();
+    private void Awake()
+    {
+        _healthContainer = GetComponent<HealthContainer>();
+        _units = FindObjectOfType<UnitsCollection>().GetComponent<UnitsCollection>();
+    }
 
     private void OnEnable() => _healthContainer.OnHealthChange += OnHealthUpdate;
 
