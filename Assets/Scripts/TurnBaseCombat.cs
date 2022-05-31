@@ -35,6 +35,8 @@ public class TurnBaseCombat : MonoBehaviour
     [SerializeField] private Color _turnColorOff = new Color(243, 209, 0, 0);
     public bool PlayerTurn { get; private set; }
 
+    [SerializeField]private bool _startBattle;
+
     private void Start()
     {
         PlayerTurn = false;
@@ -46,6 +48,11 @@ public class TurnBaseCombat : MonoBehaviour
 
     public void BattleStart()
     {
+        if(_startBattle)
+        {
+            return;
+        }
+        _startBattle = true;
         UnitsShuffle(_mainList);
         _attacker = _mainList[_currentUnitNumber];
         StartCoroutine(BattleLoop());
@@ -63,6 +70,7 @@ public class TurnBaseCombat : MonoBehaviour
         {
             return;
         }
+
         PlayerTurn = false;
         _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
         StopAllCoroutines();
@@ -117,8 +125,9 @@ public class TurnBaseCombat : MonoBehaviour
         else
         {
             _currentUnitNumber = 0;
-
             UnitsShuffle(_mainList);
+
+            _attacker = _mainList[_currentUnitNumber];
             Log("Shuffle");
         }
     }
@@ -150,9 +159,41 @@ public class TurnBaseCombat : MonoBehaviour
         return false;
     }
 
+    private void RemoveNulable()
+    {
+        foreach (var unit in _mainList)
+        {
+            if (unit == null)
+            {
+                StopCoroutine(BattleLoop());
+                _mainList.Remove(unit);
+
+                try
+                {
+                    if (_currentUnitNumber > _mainList.Count - 1)
+                    {
+                        UnitsShuffle(_mainList);
+                        StartCoroutine(BattleLoop());
+                    }
+                    else
+                    {
+                        _attacker = _mainList[_currentUnitNumber];
+                        StartCoroutine(BattleLoop());
+                    }
+                }
+                catch (MissingReferenceException exeption)
+                { 
+                    Log(exeption.Message);
+                }
+            }
+        }
+
+    }
+
     private IEnumerator WaitInput()
     {
         yield return new WaitWhile(() => _target == null);
+        yield break;
     }
 
     private IEnumerator BattleLoop()//Todo анимации атаки и перемещение цели и атакера вперед
@@ -168,9 +209,13 @@ public class TurnBaseCombat : MonoBehaviour
                 yield break;
             }
 
-            if (_attacker == null)
+            RemoveNulable();
+
+            if (_currentUnitNumber > _mainList.Count - 1)
             {
-                NextUnit();
+                _currentUnitNumber = 0;
+                UnitsShuffle(_mainList);
+                _attacker = _mainList[_currentUnitNumber];
                 continue;
             }
 
