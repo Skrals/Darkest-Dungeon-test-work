@@ -1,5 +1,4 @@
 using UnityEngine;
-
 [RequireComponent(typeof(HealthContainer))]
 public abstract class Unit : MonoBehaviour
 {

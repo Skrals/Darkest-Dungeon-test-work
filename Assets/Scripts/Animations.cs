@@ -9,7 +9,6 @@ public class Animations : MonoBehaviour
     [SerializeField] private SkeletonAnimation _skeletonAnimation;
     [SerializeField] private AnimationReferenceAsset _idle, _attak, _doubleAttack, _damageg;
 
-    // Start is called before the first frame update
     private void Start()
     {
         _skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -36,7 +35,6 @@ public class Animations : MonoBehaviour
         await Task.Delay(1500);
         targetAnimation.SetCharacterState(AnimationState.Idle);
     }
-
 
     public async void SetCharacterState(AnimationState state)
     {
