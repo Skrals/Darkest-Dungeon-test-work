@@ -13,10 +13,9 @@ public class Enemy : Unit
         Log($"{gameObject.name} current health {health}");
         if (health <= 0)
         {
-            Log($"{gameObject.name} was killes");
+            Log($"{gameObject.name} was killed");
             await Task.Delay(3000);
             Destroy(gameObject);
         }
     }
-
 }

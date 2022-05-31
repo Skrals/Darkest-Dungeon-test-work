@@ -18,7 +18,6 @@ public class TurnBaseCombat : MonoBehaviour
 
     [Header("Units collection")]
     [SerializeField] private int _currentUnitNumber;
-
     [SerializeField] private UnitsCollection _units;
 
     private List<Unit> _mainList;
@@ -52,6 +51,7 @@ public class TurnBaseCombat : MonoBehaviour
         {
             return;
         }
+
         _startBattle = true;
         UnitsShuffle(_mainList);
         _attacker = _mainList[_currentUnitNumber];
@@ -111,6 +111,7 @@ public class TurnBaseCombat : MonoBehaviour
         {
             return true;
         }
+
         return false;
     }
 
@@ -196,7 +197,7 @@ public class TurnBaseCombat : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator BattleLoop()//Todo анимации атаки и перемещение цели и атакера вперед
+    private IEnumerator BattleLoop()
     {
         System.Random targetIndex = new System.Random();
 
@@ -215,7 +216,9 @@ public class TurnBaseCombat : MonoBehaviour
             {
                 _currentUnitNumber = 0;
                 UnitsShuffle(_mainList);
+
                 _attacker = _mainList[_currentUnitNumber];
+
                 continue;
             }
 
@@ -224,6 +227,7 @@ public class TurnBaseCombat : MonoBehaviour
             if (_mainList[_currentUnitNumber].gameObject != null && _mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
                 yield return new WaitForSeconds(2);
+
                 _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
                 PlayerTurn = true;
 
@@ -233,6 +237,7 @@ public class TurnBaseCombat : MonoBehaviour
                 {
                     Attack(_attacker, _target);
                     PlayerTurn = false;
+
                     yield return new WaitForSeconds(5);
                 }
 
@@ -261,6 +266,7 @@ public class TurnBaseCombat : MonoBehaviour
                     _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
 
                     Attack(_attacker, _target);
+
                     yield return new WaitForSeconds(5);
                 }
 
@@ -272,5 +278,4 @@ public class TurnBaseCombat : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
-
 }

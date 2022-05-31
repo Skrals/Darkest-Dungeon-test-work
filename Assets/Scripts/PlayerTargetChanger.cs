@@ -1,12 +1,11 @@
 using UnityEngine;
-
 public class PlayerTargetChanger : MonoBehaviour
 {
     [SerializeField] private Enemy _enemyTarget;
     [SerializeField] private Camera _camera;
     [SerializeField] private TurnBaseCombat _turnBaseCombat;
 
-    [SerializeField]private bool _attackButtonClick;
+    [SerializeField] private bool _attackButtonClick;
 
     private void Start()
     {
@@ -33,7 +32,6 @@ public class PlayerTargetChanger : MonoBehaviour
                 _attackButtonClick = false;
             }
         }
-
     }
 
     public void AttackButton()

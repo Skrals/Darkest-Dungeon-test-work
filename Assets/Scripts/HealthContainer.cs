@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
-
 
 public class HealthContainer : MonoBehaviour
 {
@@ -27,11 +25,10 @@ public class HealthContainer : MonoBehaviour
         OnHealthChange?.Invoke(_currenthealth);
         StartCoroutine(ViewUpdater());
     }
-    
-    
+
     public float CurrentHealth()
     {
-        return _currenthealth; 
+        return _currenthealth;
     }
 
     private IEnumerator ViewUpdater()

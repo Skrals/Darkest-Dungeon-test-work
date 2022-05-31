@@ -13,7 +13,6 @@ public class Animations : MonoBehaviour
     {
         _skeletonAnimation = GetComponent<SkeletonAnimation>();
         SetCharacterState(AnimationState.Idle);
-
     }
 
     private void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)

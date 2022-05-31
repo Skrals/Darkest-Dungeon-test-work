@@ -24,5 +24,4 @@ public abstract class Unit : MonoBehaviour
     }
 
     public abstract float Attack();
-
 }

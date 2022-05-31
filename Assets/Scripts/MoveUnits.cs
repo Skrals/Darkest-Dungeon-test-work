@@ -23,6 +23,7 @@ public class MoveUnits : MonoBehaviour
             }
             index++;
         }
+
         return 0;
     }
 
@@ -44,6 +45,7 @@ public class MoveUnits : MonoBehaviour
 
             points[i + 1] = currentPoint;
             points[i] = point;
+
             await Task.Delay(100);
         }
     }
@@ -66,6 +68,7 @@ public class MoveUnits : MonoBehaviour
 
             points[i - 1] = currentPoint;
             points[i] = point;
+
             await Task.Delay(100);
         }
     }
@@ -81,8 +84,7 @@ public class MoveUnits : MonoBehaviour
             EnemyIndex = SearchIndex(target);
 
             MoveUnitsPlayer(PlayerIndex, 4, _spawner.GetSpawnPoints());
-            MoveUnitsEnemy(EnemyIndex,3, _spawner.GetSpawnPoints());
-
+            MoveUnitsEnemy(EnemyIndex, 3, _spawner.GetSpawnPoints());
         }
         else
         {
