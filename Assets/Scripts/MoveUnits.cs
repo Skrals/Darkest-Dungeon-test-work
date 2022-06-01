@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class MoveUnits : MonoBehaviour
+public class MoveUnits : Base
 {
     [SerializeField] private Spawner _spawner;
 

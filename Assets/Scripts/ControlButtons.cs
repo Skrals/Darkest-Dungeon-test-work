@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ControlButtons : MonoBehaviour
+public class ControlButtons : Base
 {
     [SerializeField] GameObject _gameMenu;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(HealthContainer))]
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : Base
 {
     [SerializeField] private HealthContainer _healthContainer;
     [SerializeField] protected UnitsCollection _units;

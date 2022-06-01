@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Debug;
 
-public class TurnBaseCombat : MonoBehaviour
+public class TurnBaseCombat : Base
 {
     [SerializeField] private Spawner _spawner;
 

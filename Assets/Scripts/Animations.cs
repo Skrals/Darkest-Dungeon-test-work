@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 public enum AnimationState { Idle, Attack, DoubleAttack, Damaged }
 
-public class Animations : MonoBehaviour
+public class Animations : Base
 {
     [SerializeField] private SkeletonAnimation _skeletonAnimation;
     [SerializeField] private AnimationReferenceAsset _idle, _attak, _doubleAttack, _damageg;

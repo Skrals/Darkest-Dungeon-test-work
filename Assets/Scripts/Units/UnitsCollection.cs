@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
-public class UnitsCollection : MonoBehaviour
+
+public class UnitsCollection : Base
 {
     public  List<Unit> _unitsCollection = new List<Unit>();
     public  List<Player> _playerCollection = new List<Player>();

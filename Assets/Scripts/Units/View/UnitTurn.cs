@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class UnitTurn : MonoBehaviour
+public class UnitTurn : Base
 {
     
 }

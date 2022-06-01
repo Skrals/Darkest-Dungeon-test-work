@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : Base
 {
     [SerializeField] private GameObject _spawnPointsPrefab;
     [SerializeField] private Enemy[] _enemysArray;

@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PlayerTargetChanger : MonoBehaviour
+public class PlayerTargetChanger : Base
 {
     [SerializeField] private Enemy _enemyTarget;
     [SerializeField] private Camera _camera;
