@@ -15,11 +15,6 @@ public class Animations : MonoBehaviour
         SetCharacterState(AnimationState.Idle);
     }
 
-    private void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
-    {
-        _skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
-    }
-
     public async void AttacksAnimations(Unit attacker, Unit target)
     {
         var attackerAnimation = attacker.GetComponent<Animations>();
@@ -35,7 +30,12 @@ public class Animations : MonoBehaviour
         targetAnimation.SetCharacterState(AnimationState.Idle);
     }
 
-    public async void SetCharacterState(AnimationState state)
+    private void SetAnimation(AnimationReferenceAsset animation, bool loop, float timeScale)
+    {
+        _skeletonAnimation.state.SetAnimation(0, animation, loop).TimeScale = timeScale;
+    }
+
+    private async void SetCharacterState(AnimationState state)
     {
         await Task.Delay(500);
 
