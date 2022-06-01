@@ -203,9 +203,12 @@ MonoBehaviour:
   _animations: {fileID: 0}
   _currentUnitNumber: 0
   _units: {fileID: 446236305}
-  _deadEnemy: 0
-  _deadPlayer: 0
   _turnView: {fileID: 0}
+  _turnColor: {r: 243, g: 209, b: 0, a: 255}
+  _turnColorOff: {r: 1, g: 1, b: 0, a: 0}
+  _startBattle: 0
+  _turnDelay: 5
+  _playerPreTurnDelay: 2
 --- !u!4 &124354665
 Transform:
   m_ObjectHideFlags: 0

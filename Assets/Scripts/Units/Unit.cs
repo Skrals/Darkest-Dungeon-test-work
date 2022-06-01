@@ -16,9 +16,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     private void OnEnable() => _healthContainer.OnHealthChange += OnHealthUpdate;
-
     private void OnDisable() => _healthContainer.OnHealthChange -= OnHealthUpdate;
-
     protected abstract void OnHealthUpdate(float health);
 
     protected float AttackDamage()

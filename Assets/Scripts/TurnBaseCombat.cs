@@ -28,14 +28,22 @@ public class TurnBaseCombat : MonoBehaviour
     [SerializeField] private UnitTurn _turnView;
     [SerializeField] private Color _turnColor = new Color(243, 209, 0, 255);
     [SerializeField] private Color _turnColorOff = new Color(243, 209, 0, 0);
+
+    [Header("Turn settings")]
+    [SerializeField] private bool _startBattle;
     public bool PlayerTurn { get; private set; }
 
-    [SerializeField] private bool _startBattle;
+    [SerializeField] private float _turnDelay;
+    [SerializeField] private float _playerPreTurnDelay;
 
     private void Start()
     {
-        PlayerTurn = false;
         _animations = new Animations();
+
+        _turnDelay = 5f;
+        _playerPreTurnDelay = 2f;
+        PlayerTurn = false;
+
         _mainList = _units._unitsCollection;
         _playerList = _units._playerCollection;
         _enemyList = _units._enemyCollection;
@@ -50,7 +58,7 @@ public class TurnBaseCombat : MonoBehaviour
 
         _startBattle = true;
         UnitsShuffle(_mainList);
-        _attacker = _mainList[_currentUnitNumber];
+        ChangeAttacker();
         StartCoroutine(BattleLoop());
     }
 
@@ -68,10 +76,16 @@ public class TurnBaseCombat : MonoBehaviour
         }
 
         PlayerTurn = false;
-        _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
+        TurnViewPointSwitcher();
         StopAllCoroutines();
         NextUnit();
         StartCoroutine(BattleLoop());
+    }
+
+    private void TurnViewPointSwitcher()
+    {
+        Color color = _turnView.GetComponent<Image>().color == _turnColor ? _turnColorOff : _turnColor;
+        _turnView.GetComponent<Image>().color = color;
     }
 
     private void UnitsShuffle(List<Unit> units)
@@ -117,16 +131,21 @@ public class TurnBaseCombat : MonoBehaviour
 
         if (_currentUnitNumber <= _mainList.Count - 1)
         {
-            _attacker = _mainList[_currentUnitNumber];
+            ChangeAttacker();
         }
         else
         {
             _currentUnitNumber = 0;
             UnitsShuffle(_mainList);
 
-            _attacker = _mainList[_currentUnitNumber];
+            ChangeAttacker();
             Log("Shuffle");
         }
+    }
+
+    private void ChangeAttacker()
+    {
+        _attacker = _mainList[_currentUnitNumber];
     }
 
     private bool DeadUnits()
@@ -166,7 +185,7 @@ public class TurnBaseCombat : MonoBehaviour
                 _currentUnitNumber = 0;
                 UnitsShuffle(_mainList);
 
-                _attacker = _mainList[_currentUnitNumber];
+                ChangeAttacker();
 
                 continue;
             }
@@ -175,9 +194,9 @@ public class TurnBaseCombat : MonoBehaviour
 
             if (_mainList[_currentUnitNumber].gameObject != null && _mainList[_currentUnitNumber].gameObject.GetComponent<Player>())
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(_playerPreTurnDelay);
 
-                _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
+                TurnViewPointSwitcher();
                 PlayerTurn = true;
 
                 yield return StartCoroutine(WaitInput());
@@ -187,10 +206,10 @@ public class TurnBaseCombat : MonoBehaviour
                     Attack(_attacker, _target);
                     PlayerTurn = false;
 
-                    yield return new WaitForSeconds(5);
+                    yield return new WaitForSeconds(_turnDelay);
                 }
 
-                _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
+                TurnViewPointSwitcher();
             }
             else
             {
@@ -212,14 +231,14 @@ public class TurnBaseCombat : MonoBehaviour
 
                 if (_target != null && CompairUnits(_attacker, _target))
                 {
-                    _turnView.GetComponent<Image>().color = _turnColor;// показываем метку хода
+                    TurnViewPointSwitcher();
 
                     Attack(_attacker, _target);
 
-                    yield return new WaitForSeconds(5);
+                    yield return new WaitForSeconds(_turnDelay);
                 }
 
-                _turnView.GetComponent<Image>().color = _turnColorOff;// скрываем метку хода
+                TurnViewPointSwitcher();
             }
 
             NextUnit();
